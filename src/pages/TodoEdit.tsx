@@ -18,8 +18,6 @@ function TodoEdit() {
   return (
     <Fragment>
       <h1>Edit Todo</h1>
-      <pre>{JSON.stringify(getData, null, 2)}</pre>
-
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="formDescription">
           <Form.Label>Description</Form.Label>
@@ -36,7 +34,7 @@ function TodoEdit() {
           <Form.Check
             type="checkbox"
             label="Done?"
-            name="isDone"
+            name="isClosed"
             defaultChecked={getData.isClosed}
             ref={register}
           />
