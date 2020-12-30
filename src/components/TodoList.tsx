@@ -26,8 +26,8 @@ function TodoList() {
       </Row>
 
       <hr></hr>
-      {data.map((t) => (
-        <TodoCard todo={t} />
+      {data.map((t, k) => (
+        <TodoCard key={k} todo={t} />
       ))}
     </Fragment>
   );

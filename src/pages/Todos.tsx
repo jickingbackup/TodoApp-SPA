@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { useParams } from "react-router-dom";
 import TodoList from "../components/TodoList";
 
 function Todos() {
