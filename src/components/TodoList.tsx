@@ -1,6 +1,7 @@
 import useAxios from "axios-hooks";
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { Fragment } from "react";
+import { Button, Row, Col } from "react-bootstrap";
+import TodoCard from "./TodoCard";
 
 function TodoList() {
   const [{ data, loading, error }, refetch] = useAxios(
@@ -11,12 +12,24 @@ function TodoList() {
   if (error) return <p>Error!</p>;
 
   return (
-    <div>
-      <Button size="sm" onClick={() => refetch()}>
-        Refresh
-      </Button>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
+    <Fragment>
+      <Row>
+        <Col>
+          <Button size="sm" className="mx-1" onClick={() => refetch()}>
+            Refresh
+          </Button>
+
+          <Button size="sm" className="mx-1">
+            Add
+          </Button>
+        </Col>
+      </Row>
+
+      <hr></hr>
+      {data.map((t) => (
+        <TodoCard todo={t} />
+      ))}
+    </Fragment>
   );
 }
 

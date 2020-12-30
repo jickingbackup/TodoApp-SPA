@@ -6,6 +6,7 @@ import Todos from "./pages/Todos";
 import PageNotFound from "./pages/PageNotFound";
 import Header from "./components/Header";
 import MainContainer from "./components/MainContainer";
+import TodoEdit from "./pages/TodoEdit";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/todos" component={Todos} />
-          <Route exact path="/todos/edit/:id" component={Todos} />
+          <Route exact path="/todos/edit/:id" component={TodoEdit} />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </MainContainer>

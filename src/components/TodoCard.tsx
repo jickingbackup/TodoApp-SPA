@@ -1,16 +1,26 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-function Container({ children }) {
+function TodoCard({ todo }) {
+  let { id, description } = todo;
+
   return (
-    <Container>
-      <Row>
-        <Col></Col>
-        <Col>{children}</Col>
-        <Col></Col>
-      </Row>
-    </Container>
+    <Card>
+      <Card.Body>{description}</Card.Body>
+      <Card.Footer>
+        <Button
+          variant="primary"
+          size="sm"
+          className="ms-1"
+          as={Link}
+          to={`/todos/edit/${id}`}
+        >
+          Edit
+        </Button>
+      </Card.Footer>
+    </Card>
   );
 }
 
-export default Container;
+export default TodoCard;
