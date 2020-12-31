@@ -3,9 +3,10 @@ import React, { Fragment, useEffect } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import TodoCard from "./TodoCard";
 import { Link } from "react-router-dom";
+import { Todo } from "../common/Types";
 
 function TodoList() {
-  const [{ data, loading, error }, refetch] = useAxios(
+  const [{ data, loading, error }, refetch] = useAxios<Todo[]>(
     `${process.env.REACT_APP_API_ROOT_URL}/todos`
   );
 

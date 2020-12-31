@@ -1,7 +1,11 @@
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 
-function MainContainer({ children }) {
+type Props = {
+  children: React.ReactNode;
+};
+
+function MainContainer({ children }: Props) {
   return (
     <Container>
       <Row>
