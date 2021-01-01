@@ -1,9 +1,9 @@
 export type Todo = {
-  id: string;
-  description: string;
-  isClosed: boolean;
-};
+	id: string
+	description: string
+	isClosed: boolean
+}
 
 export type TodosRouteParameters = {
-  id: string;
-};
+	id: string
+}
