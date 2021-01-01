@@ -1,11 +1,13 @@
 import useAxios from "axios-hooks";
 import React, { Fragment, useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { Todo } from "../common/Types";
+import TodoForm from "../components/TodoForm";
 
 function TodoAdd() {
-  const [{ data, loading, error }, executePost] = useAxios(
+  // api
+  const [{ loading, error }, executePost] = useAxios(
     {
       url: `${process.env.REACT_APP_API_ROOT_URL}/todos/`,
       method: "POST",
@@ -13,12 +15,12 @@ function TodoAdd() {
     { manual: true }
   );
 
-  const { register, handleSubmit } = useForm(data);
-  const onSubmit = (data) => {
-    console.log(data);
-    executePost({ data }).then(() => setShowModal(true));
+  // Form submit
+  const onSubmit = (todo: Todo) => {
+    executePost({ data: todo }).then(() => setShowModal(true));
   };
 
+  // Modal, Redirection
   let history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => {
@@ -32,29 +34,8 @@ function TodoAdd() {
   return (
     <Fragment>
       <h1>Add Todo</h1>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group controlId="formDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Description"
-            name="description"
-            ref={register}
-          />
-        </Form.Group>
 
-        <Form.Group controlId="formCheckbox">
-          <Form.Check
-            type="checkbox"
-            label="Done?"
-            name="isClosed"
-            ref={register}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+      <TodoForm onSubmit={onSubmit} />
 
       <Modal show={showModal} onHide={handleClose} size="sm">
         <Modal.Header closeButton>

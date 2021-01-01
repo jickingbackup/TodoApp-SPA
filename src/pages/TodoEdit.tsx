@@ -1,16 +1,21 @@
 import useAxios from "axios-hooks";
 import React, { Fragment } from "react";
-import { Button, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Todo, TodosRouteParameters } from "../common/Types";
+import TodoForm from "../components/TodoForm";
 
 function TodoEdit() {
-  const { id } = useParams();
-  const [{ data: getData, loading: getLoading, error: getError }] = useAxios(
-    `${process.env.REACT_APP_API_ROOT_URL}/todos/${id}`
-  );
-  const { register, handleSubmit } = useForm(getData);
-  const onSubmit = (data) => console.log(data);
+  const { id } = useParams<TodosRouteParameters>();
+  const [
+    { data: getData, loading: getLoading, error: getError },
+  ] = useAxios<Todo>(`${process.env.REACT_APP_API_ROOT_URL}/todos/${id}`);
+
+  // Form submit
+  const onSubmit = (todo: Todo) => {
+    console.log("onSubmit(todo)", todo);
+    // Todo: execute put
+    // executePut({ data: todo }).then(() => setShowModal(true));
+  };
 
   if (getLoading) return <p>Loading...</p>;
   if (getError) return <p>Error!</p>;
@@ -18,31 +23,7 @@ function TodoEdit() {
   return (
     <Fragment>
       <h1>Edit Todo</h1>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group controlId="formDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Description"
-            name="description"
-            defaultValue={getData.description}
-            ref={register}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formCheckbox">
-          <Form.Check
-            type="checkbox"
-            label="Done?"
-            name="isClosed"
-            defaultChecked={getData.isClosed}
-            ref={register}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+      <TodoForm onSubmit={onSubmit} todo={getData} />
     </Fragment>
   );
 }

@@ -3,3 +3,7 @@ export type Todo = {
   description: string;
   isClosed: boolean;
 };
+
+export type TodosRouteParameters = {
+  id: string;
+};
