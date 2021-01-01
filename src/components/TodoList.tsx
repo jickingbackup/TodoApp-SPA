@@ -1,18 +1,15 @@
-import useAxios from 'axios-hooks'
 import React, { Fragment, useEffect } from 'react'
 import { Button, Row, Col } from 'react-bootstrap'
 import TodoCard from './TodoCard'
 import { Link } from 'react-router-dom'
-import { Todo } from '../common/Types'
+import { useApiTodos } from '../hooks/UseApiTodos'
 
 function TodoList() {
-	const [{ data, loading, error }, refetch] = useAxios<Todo[]>(
-		`${process.env.REACT_APP_API_ROOT_URL}/todos`
-	)
+	const { data, loading, error, getTodos } = useApiTodos()
 
 	useEffect(() => {
-		refetch()
-	}, [refetch])
+		getTodos()
+	}, [getTodos])
 
 	if (loading) return <p>Loading...</p>
 	if (error) return <p>Error!</p>
@@ -21,7 +18,7 @@ function TodoList() {
 		<Fragment>
 			<Row>
 				<Col>
-					<Button size="sm" className="mx-1" onClick={() => refetch()}>
+					<Button size="sm" className="mx-1" onClick={() => getTodos()}>
 						Refresh
 					</Button>
 
@@ -32,9 +29,7 @@ function TodoList() {
 			</Row>
 
 			<hr></hr>
-			{data.map((t, k) => (
-				<TodoCard key={k} todo={t} />
-			))}
+			{data && data.map((t, k) => <TodoCard key={k} todo={t} />)}
 		</Fragment>
 	)
 }
